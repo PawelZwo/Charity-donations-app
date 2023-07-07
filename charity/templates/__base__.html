@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
 </head>
 <body>
-{% include '__header__.html' %}
+{% block header %}
+{% endblock %}
 {% block content %}
 {% endblock %}
 {% include '__footer__.html' %}

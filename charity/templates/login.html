@@ -1,8 +1,17 @@
 {% extends '__base__.html' %}
+{% block header %}
+    <header>
+        {% include '__header__.html' %}
+    </header>
+{% endblock %}
 {% block content %}
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
     <section class="login-page">
         <h2>Zaloguj się</h2>
-        <form>
+        <form method="POST">
+            {% csrf_token %}
             <div class="form-group">
                 <input type="email" name="email" placeholder="Email"/>
             </div>
