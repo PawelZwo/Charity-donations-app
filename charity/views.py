@@ -20,7 +20,11 @@ class LandingPage(View):
 
 class AddDonation(View):
     def get(self, request):
-        return render(request, 'form.html')
+        context = {
+            'categories': Category.objects.all(),
+            'institutions': Institution.objects.all()
+        }
+        return render(request, 'form.html', context)
 
 
 class Login(View):
