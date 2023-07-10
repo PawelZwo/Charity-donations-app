@@ -37,7 +37,7 @@ class Login(View):
             login(request, user)
             return redirect('index')
         else:
-            messages.error(request, 'Błędny email lub hasło / konto nie zostało aktywowane')
+            messages.error(request, 'Błędny e-mail lub hasło')
         return redirect('login')
 
 

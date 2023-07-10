@@ -1,13 +1,12 @@
 {% extends '__base__.html' %}
+
 {% block header %}
     <header>
         {% include '__header__.html' %}
     </header>
 {% endblock %}
+
 {% block content %}
-    {% for message in messages %}
-        {{ message }}
-    {% endfor %}
     <section class="login-page">
         <h2>Zaloguj się</h2>
         <form method="POST">
@@ -20,8 +19,12 @@
                 <a href="#" class="btn btn--small btn--without-border reset-password">Przypomnij hasło</a>
             </div>
 
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+
             <div class="form-group form-group--buttons">
-                <a href="#" class="btn btn--without-border">Załóż konto</a>
+                <a href="{% url 'register' %}" class="btn btn--without-border">Załóż konto</a>
                 <button class="btn" type="submit">Zaloguj się</button>
             </div>
         </form>
