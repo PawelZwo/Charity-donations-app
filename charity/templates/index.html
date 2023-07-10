@@ -25,7 +25,7 @@
             </div>
 
             <div class="stats--item">
-                <em>{{ organisations }}</em>
+                <em>{{ places }}</em>
                 <h3>Wspartych organizacji</h3>
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam magnam, sint nihil cupiditate
                     quas
@@ -89,20 +89,20 @@
             <p>W naszej bazie znajdziesz listę zweryfikowanych Fundacji, z którymi współpracujemy. Możesz sprawdzić czym
                 się zajmują, komu pomagają i czego potrzebują.</p>
 
-            {#            <ul class="help--slides-items">#}
-            {#                {% for fundation in fundations %}#}
-            {#                    <li>#}
-            {#                        <div class="col">#}
-            {#                            <div class="title">{{ fundation.name }}</div>#}
-            {#                            <div class="subtitle">{{ fundation.description }}</div>#}
-            {#                        </div>#}
-            {##}
-            {#                        <div class="col">#}
-            {#                            <div class="text">{{ fundation.category }}</div>#}
-            {#                        </div>#}
-            {#                    </li>#}
-            {#                {% endfor %}#}
-            {#            </ul>#}
+            <ul class="help--slides-items">
+                {% for fundation in fundations %}
+                    <li>
+                        <div class="col">
+                            <div class="title">{{ fundation.name }}</div>
+                            <div class="subtitle">Cel i misja: {{ fundation.description }}</div>
+                        </div>
+
+                        <div class="col">
+                            <div class="text">{{ fundation.category.all|join:", " }}</div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
             <!-- Pagination
             <ul class="help--slides-pagination">
               <li><a href="#" class="btn btn--small btn--without-border active" data-page="1">1</a></li>
@@ -120,20 +120,20 @@
                 accusamus debitis. Ducimus, officia. Quia, sunt illum! Non iste placeat ab ipsum alias
                 quos suscipit corporis!
             </p>
-            {#            <ul class="help--slides-items">#}
-            {#                {% for organisation in organisations %}#}
-            {#                    <li>#}
-            {#                        <div class="col">#}
-            {#                            <div class="title">{{ organisation.name }}</div>#}
-            {#                            <div class="subtitle">{{ organisation.description }}</div>#}
-            {#                        </div>#}
-            {##}
-            {#                        <div class="col">#}
-            {#                            <div class="text">{{ organisation.category }}</div>#}
-            {#                        </div>#}
-            {#                    </li>#}
-            {#                {% endfor %}#}
-            {#            </ul>#}
+            <ul class="help--slides-items">
+                {% for organisation in organisations %}
+                    <li>
+                        <div class="col">
+                            <div class="title">{{ organisation.name }}</div>
+                            <div class="subtitle">Cel i misja: {{ organisation.description }}</div>
+                        </div>
+
+                        <div class="col">
+                            <div class="text">{{ organisation.category.all|join:", " }}</div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
 
             <!-- Pagination
             <ul class="help--slides-pagination">
@@ -151,20 +151,20 @@
             <p>Lorem ipsum dolor sit amet, his ocurreret persequeris ea, ad utinam laudem duo. Verterem adipisci
                 partiendo
                 eos ne, ea his reque quaeque recteque, ne quo lobortis intellegam.</p>
-            {#            <ul class="help--slides-items">#}
-            {#                {% for local in locals %}#}
-            {#                    <li>#}
-            {#                        <div class="col">#}
-            {#                            <div class="title">{{ local.name }}</div>#}
-            {#                            <div class="subtitle">{{ local.description }}</div>#}
-            {#                        </div>#}
-            {##}
-            {#                        <div class="col">#}
-            {#                            <div class="text">{{ local.category }}</div>#}
-            {#                        </div>#}
-            {#                    </li>#}
-            {#                {% endfor %}#}
-            {#            </ul>#}
+            <ul class="help--slides-items">
+                {% for local in locals %}
+                    <li>
+                        <div class="col">
+                            <div class="title">{{ local.name }}</div>
+                            <div class="subtitle">Cel i misja: {{ local.description }}</div>
+                        </div>
+
+                        <div class="col">
+                            <div class="text">{{ local.category.all|join:", " }}</div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
 
             <!-- Pagination
             <ul class="help--slides-pagination">

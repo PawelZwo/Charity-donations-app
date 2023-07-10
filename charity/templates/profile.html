@@ -1,0 +1,14 @@
+{% extends '__base__.html' %}
+
+{% block header %}
+    <header>
+        {% include '__header__.html' %}
+    </header>
+{% endblock %}
+
+{% block content %}
+    <section class="login-page">
+        <div><h2>{{ profile.first_name }} {{ profile.last_name }}</h2></div>
+        <div><h3>{{ profile.email }}</h3></div>
+    </section>
+{% endblock %}

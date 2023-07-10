@@ -10,7 +10,10 @@ class LandingPage(View):
     def get(self, request):
         context = {
             'bags': Donation.objects.all().count(),
-            'organisations': Institution.objects.all().count()
+            'places': Institution.objects.all().count(),
+            'organisations': Institution.objects.filter(type='organizacja pozarządowa'),
+            'fundations': Institution.objects.filter(type='fundacja'),
+            'locals': Institution.objects.filter(type='zbiórka lokalna')
         }
         return render(request, 'index.html', context)
 
@@ -58,7 +61,7 @@ class Register(View):
             return redirect('register')
 
         if password != password2:
-            messages.error(request, 'Hasła muszą być takie same. Spróbuj ponownie')
+            messages.error(request, 'Hasła muszą być takie same, spróbuj ponownie')
             return redirect('register')
 
         user = User.objects.create_user(first_name=name, last_name=surname, password=password, email=email,
@@ -72,3 +75,12 @@ class Logout(View):
     def get(self, request):
         logout(request)
         return redirect('index')
+
+
+class Profile(View):
+    def get(self, request, pk):
+        context = {'first_name': User.objects.get(pk=pk).first_name,
+                   'last_name': User.objects.get(pk=pk).last_name,
+                   'email': User.objects.get(pk=pk).email
+                   }
+        return render(request, 'profile.html', {'profile': context})
