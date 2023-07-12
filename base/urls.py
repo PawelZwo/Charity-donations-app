@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from charity.views import *
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
@@ -10,4 +11,6 @@ urlpatterns = [
     path('add-donation/', AddDonation.as_view(), name='add_donation'),
     path('logout/', Logout.as_view(), name='logout'),
     path('profile/<pk>/', Profile.as_view(), name='profile'),
+    path('confirm-password/', PasswordConfirmation.as_view(),name='password_confirmation'),
+    path('change-password/', ChangePassword.as_view(), name='password_change')
 ]

@@ -1,9 +1,11 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import *
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, update_session_auth_hash
 from .forms import *
 from django.contrib import messages
+from django.contrib.auth.forms import PasswordChangeForm
 
 
 class LandingPage(View):
@@ -18,7 +20,8 @@ class LandingPage(View):
         return render(request, 'index.html', context)
 
 
-class AddDonation(View):
+class AddDonation(LoginRequiredMixin, View):
+
     def get(self, request):
         context = {
             'categories': Category.objects.all(),
@@ -42,7 +45,10 @@ class Login(View):
         user = authenticate(username=email, password=password)
         if user is not None:
             login(request, user)
-            return redirect('index')
+            if 'next' in request.POST:
+                return redirect(request.POST.get('next'))
+            else:
+                return redirect('index')
         else:
             messages.error(request, 'Błędny e-mail lub hasło')
         return redirect('login')
@@ -81,10 +87,43 @@ class Logout(View):
         return redirect('index')
 
 
-class Profile(View):
+class Profile(LoginRequiredMixin, View):
+
     def get(self, request, pk):
         context = {'first_name': User.objects.get(pk=pk).first_name,
                    'last_name': User.objects.get(pk=pk).last_name,
                    'email': User.objects.get(pk=pk).email
                    }
         return render(request, 'profile.html', {'profile': context})
+
+
+class PasswordConfirmation(LoginRequiredMixin, View):
+
+    def get(self, request):
+        return render(request, 'password_confirmation.html')
+
+    def post(self, request):
+        password = request.POST.get('password')
+        password_confirmation = request.POST.get('password2')
+        if request.user.check_password(password_confirmation):
+            return redirect('password_change')
+        else:
+            messages.error(request, 'Hasła są różne od siebie lub nie są zgodne z Twoim obecnym hasłem.')
+            return render(request, 'password_confirmation.html')
+
+
+class ChangePassword(LoginRequiredMixin, View):
+
+    def get(self, request):
+        form = PasswordChangeForm(request.user)
+        return render(request, 'password_change.html', {'form': form})
+
+    def post(self, request):
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Pomyślnie zmieniono hasło!')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Wprowadź poprawnie nowe hasło.')

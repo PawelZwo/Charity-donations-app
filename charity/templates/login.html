@@ -25,6 +25,9 @@
 
             <div class="form-group form-group--buttons">
                 <a href="{% url 'register' %}" class="btn btn--without-border">Załóż konto</a>
+                {% if request.GET.next %}
+                    <input type="hidden" name="next" value="{{ request.GET.next }}">
+                {% endif %}
                 <button class="btn" type="submit">Zaloguj się</button>
             </div>
         </form>
