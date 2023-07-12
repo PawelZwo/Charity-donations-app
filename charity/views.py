@@ -45,13 +45,18 @@ class Login(View):
         user = authenticate(username=email, password=password)
         if user is not None:
             login(request, user)
-            if 'next' in request.POST:
-                return redirect(request.POST.get('next'))
+            next_url = request.POST.get('next')
+            if next_url:
+                return redirect(next_url)
             else:
                 return redirect('index')
         else:
             messages.error(request, 'Błędny e-mail lub hasło')
-        return redirect('login')
+            next_url = request.GET.get('next')
+            if next_url:
+                return redirect(next_url)
+            else:
+                return redirect('login')
 
 
 class Register(View):
