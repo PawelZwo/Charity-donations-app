@@ -1,8 +1,8 @@
-{% extends '__base__.html' %}
+{% extends 'partials/__base__.html' %}
 {% load static %}
 {% block header %}
     <header class="header--form-page">
-        {% include '__header__.html' %}
+        {% include 'partials/__header__.html' %}
         <div class="slogan container container--90">
             <div class="slogan--item">
                 <h1>
@@ -98,13 +98,13 @@
                 </div>
 
 
-                <!-- STEP 4 -->
+                <!-- STEP 3 -->
                 <div data-step="3">
                     <h3>Wybierz organizacje, której chcesz pomóc:</h3>
                     {% for institution in institutions %}
                         <div class="form-group form-group--checkbox">
                             <label>
-                                <input type="radio" name="organization" value="old"/>
+                                <input type="radio" name="organization" value="{{ institution.name }}"/>
                                 <span class="checkbox radio"></span>
                                 <span class="description">
                   <div class="title">{{ institution.name }}</div>
@@ -121,7 +121,7 @@
                     </div>
                 </div>
 
-                <!-- STEP 5 -->
+                <!-- STEP 4 -->
                 <div data-step="4">
                     <h3>Podaj adres oraz termin odbioru rzecz przez kuriera:</h3>
 
@@ -173,7 +173,7 @@
                     </div>
                 </div>
 
-                <!-- STEP 6 -->
+                <!-- STEP 5 -->
                 <div data-step="5">
                     <h3>Podsumowanie Twojej darowizny</h3>
 
@@ -183,15 +183,12 @@
                             <ul>
                                 <li>
                                     <span class="icon icon-bag"></span>
-                                    <span class="summary--text"
-                                    >4 worki ubrań w dobrym stanie dla dzieci</span>
+                                    <span class="summary--text" id="summary_bags_categories"></span>
                                 </li>
 
                                 <li>
                                     <span class="icon icon-hand"></span>
-                                    <span class="summary--text"
-                                    >Dla fundacji "Mam marzenie" w Warszawie</span
-                                    >
+                                    <span class="summary--text" id="summary_organisation"></span>
                                 </li>
                             </ul>
                         </div>
@@ -200,19 +197,19 @@
                             <div class="form-section--column">
                                 <h4>Adres odbioru:</h4>
                                 <ul>
-                                    <li>Prosta 51</li>
-                                    <li>Warszawa</li>
-                                    <li>99-098</li>
-                                    <li>123 456 789</li>
+                                    <li id="address"></li>
+                                    <li id="zipcode"></li>
+                                    <li id="city"></li>
+                                    <li id="phonenumber"></li>
                                 </ul>
                             </div>
 
                             <div class="form-section--column">
                                 <h4>Termin odbioru:</h4>
                                 <ul>
-                                    <li>13/12/2018</li>
-                                    <li>15:40</li>
-                                    <li>Brak uwag</li>
+                                    <li id="pickup_date"></li>
+                                    <li id="pickup_time"></li>
+                                    <li id="pickup_info"></li>
                                 </ul>
                             </div>
                         </div>
