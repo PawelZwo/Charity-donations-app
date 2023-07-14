@@ -120,12 +120,16 @@ class Logout(View):
 class Profile(LoginRequiredMixin, View):
 
     def get(self, request, pk):
-        context = {'first_name': User.objects.get(pk=pk).first_name,
-                   'last_name': User.objects.get(pk=pk).last_name,
-                   'email': User.objects.get(pk=pk).email,
-                   'donations': Donation.objects.filter(user_id=pk)
+        user = User.objects.get(pk=pk)
+        users_donations = Donation.objects.filter(user=pk)
+        context = {'first_name': user.first_name,
+                   'last_name': user.last_name,
+                   'email': user.email,
+                   'donations_all': users_donations.count,
+                   'all_pending': users_donations.filter(is_taken=False),
+                   'all_taken': users_donations.filter(is_taken=True)
                    }
-        return render(request, 'profile.html', {'profile': context})
+        return render(request, 'profile.html', context)
 
 
 class PasswordConfirmation(LoginRequiredMixin, View):

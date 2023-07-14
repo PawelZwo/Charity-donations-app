@@ -13,7 +13,44 @@
                 {{ message }}
             {% endfor %}
         </div>
-        <div><h2>{{ profile.first_name }} {{ profile.last_name }}</h2></div>
-        <div><h3>{{ profile.email }}</h3></div>
+        <div><h2>{{ first_name }} {{ last_name }}</h2></div>
+        <div><h3>{{ email }}</h3></div>
+
+        <h1>Twoje donacje: {{ donations_all }}</h1>
+
+        <div>
+
+            {% if all_pending != 0 %}
+                <h3>Donacje do odebrania:</h3>
+                <ul id="pending_donations" style="list-style-type: none;">
+                    {% for pending in all_pending %}
+
+                        <li style="margin-bottom: 10px;">
+                            {{ pending.quantity }} worków dla {{ pending.institution }}
+                            (do zabrania dnia {{ pending.pick_up_date }} o godz. {{ pending.pick_up_time }})
+                            <button type="submit" value="{{ pending.pk }}" style="margin-left: 10px; display: inline;"
+                                    formaction="post">
+                                Zabrane
+                            </button>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <br>
+
+            {% if all_taken.count != 0 %}
+                <h3>Donacje odebrane:</h3>
+                <ul id="taken_donations" style="list-style-type: none;">
+                    {% for taken in all_taken %}
+                        <li style="margin-bottom: 10px;">
+                            {{ taken.quantity }} worków dla {{ taken.institution }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+        </div>
     </section>
 {% endblock %}
