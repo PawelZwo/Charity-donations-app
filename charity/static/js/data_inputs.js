@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     categories.forEach((checkbox) => {
         checkbox.addEventListener('change', (event) => {
             if (event.target.checked) {
-                categories_values.push(event.target.value)
+                categories_values.push(event.target.id)
             }
         })
     })
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function showOrg() {
         if (this.checked) {
-            summary_organisation.innerText = `Dla ` + this.value;
+            summary_organisation.innerText = `Dla ` + this.id;
         }
     }
 

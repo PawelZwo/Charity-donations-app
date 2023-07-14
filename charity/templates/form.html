@@ -57,7 +57,7 @@
             <div class="form--steps-counter">Krok <span>1</span>/5</div>
 
             <form method="POST">
-            {% csrf_token %}
+                {% csrf_token %}
                 <!-- STEP 1: class .active is switching steps -->
                 <div data-step="1" class="active">
                     <h3>Zaznacz co chcesz oddać:</h3>
@@ -69,6 +69,7 @@
                                         type="checkbox"
                                         name="categories"
                                         value="{{ category.pk }}"
+                                        id="{{ category.name }}"
                                 />
                                 <span class="checkbox"></span>
                                 <span class="description">{{ category }}</span>
@@ -105,7 +106,7 @@
                     {% for institution in institutions %}
                         <div class="form-group form-group--checkbox">
                             <label>
-                                <input type="radio" name="organization" value="{{ institution.pk }}"/>
+                                <input type="radio" name="organization" value="{{ institution.pk }}" id="{{ institution.name }}"/>
                                 <span class="checkbox radio"></span>
                                 <span class="description">
                   <div class="title">{{ institution.name }}</div>
@@ -224,4 +225,5 @@
             </form>
         </div>
     </section>
+    <script src="{% static 'js/data_inputs.js' %}"></script>
 {% endblock %}
