@@ -21,7 +21,9 @@
 {% include 'partials/__footer__.html' %}
 
 <script src="{% static 'js/app.js' %}"></script>
-<script src="{% static 'js/data_inputs.js' %}"></script>
+{% if request.path == '/add-donation/' %}
+    <script src="{% static 'js/data_inputs.js' %}"></script>
+{% endif %}
 
 </body>
 </html>

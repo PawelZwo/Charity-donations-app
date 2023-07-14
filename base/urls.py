@@ -9,6 +9,7 @@ urlpatterns = [
     path('login/', Login.as_view(), name='login'),
     path('register/', Register.as_view(), name='register'),
     path('add-donation/', AddDonation.as_view(), name='add_donation'),
+    path('donation-confirmation/', DonationConfirmation.as_view(), name='donation_confirmation'),
     path('logout/', Logout.as_view(), name='logout'),
     path('profile/<pk>/', Profile.as_view(), name='profile'),
     path('confirm-password/', PasswordConfirmation.as_view(),name='password_confirmation'),

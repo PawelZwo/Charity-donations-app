@@ -29,6 +29,31 @@ class AddDonation(LoginRequiredMixin, View):
         }
         return render(request, 'form.html', context)
 
+    def post(self, request):
+        categories = request.POST.get('categories')
+        quantity = request.POST.get('bags')
+        institution = request.POST.get('organization')
+        address = request.POST.get('address')
+        phone_number = request.POST.get('phone')
+        city = request.POST.get('city')
+        zip_code = request.POST.get('postcode')
+        pick_up_date = request.POST.get('data')
+        pick_up_time = request.POST.get('time')
+        pick_up_comment = request.POST.get('more_info')
+        user = request.user.pk
+        Donation.objects.create(quantity=quantity,
+                                institution_id=institution, address=address,
+                                phone_number=phone_number, city=city,
+                                zip_code=zip_code, pick_up_date=pick_up_date,
+                                pick_up_time=pick_up_time, pick_up_comment=pick_up_comment,
+                                user_id=user)
+        return redirect('donation_confirmation')
+
+
+class DonationConfirmation(View):
+    def get(self, request):
+        return render(request, 'form-confirmation.html')
+
 
 class Login(View):
     def get(self, request):
@@ -97,7 +122,8 @@ class Profile(LoginRequiredMixin, View):
     def get(self, request, pk):
         context = {'first_name': User.objects.get(pk=pk).first_name,
                    'last_name': User.objects.get(pk=pk).last_name,
-                   'email': User.objects.get(pk=pk).email
+                   'email': User.objects.get(pk=pk).email,
+                   'donations': Donation.objects.filter(user_id=pk)
                    }
         return render(request, 'profile.html', {'profile': context})
 
