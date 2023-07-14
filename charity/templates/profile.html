@@ -22,20 +22,22 @@
 
             {% if all_pending != 0 %}
                 <h3>Donacje do odebrania:</h3>
-                <ul id="pending_donations" style="list-style-type: none;">
+                <form method="post">
+                {% csrf_token %}
+                <ul id="pending_donations" style="list-style-type: none; margin-top: -15px;">
                     {% for pending in all_pending %}
 
                         <li style="margin-bottom: 10px;">
                             {{ pending.quantity }} worków dla {{ pending.institution }}
                             (do zabrania dnia {{ pending.pick_up_date }} o godz. {{ pending.pick_up_time }})
-                            <button type="submit" value="{{ pending.pk }}" style="margin-left: 10px; display: inline;"
-                                    formaction="post">
+                            <button type="submit" name="submit" value="{{ pending.pk }}" style="margin-left: 10px; display: inline;">
                                 Zabrane
                             </button>
                         </li>
 
                     {% endfor %}
                 </ul>
+                </form>
             {% endif %}
 
             <br>

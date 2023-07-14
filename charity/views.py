@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views import View
 from .models import *
 from django.contrib.auth import login, logout, update_session_auth_hash
@@ -130,6 +131,12 @@ class Profile(LoginRequiredMixin, View):
                    'all_taken': users_donations.filter(is_taken=True)
                    }
         return render(request, 'profile.html', context)
+
+    def post(self, request, pk):
+        taken_donation = Donation.objects.get(pk=request.POST.get('submit'))
+        taken_donation.is_taken = True
+        taken_donation.save()
+        return redirect('profile', pk=request.user.pk)
 
 
 class PasswordConfirmation(LoginRequiredMixin, View):
