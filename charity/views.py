@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Sum
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import *
@@ -14,7 +15,7 @@ class LandingPage(View):
         foundations = Institution.objects.filter(type='fundacja')
         local_funding = Institution.objects.filter(type='zbiórka lokalna')
         context = {
-            'bags': Donation.objects.all().count(),
+            'bags': Donation.objects.aggregate(sum_bags_quantity=Sum('quantity')),
             'places': Institution.objects.all().count(),
         }
 
