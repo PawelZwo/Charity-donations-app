@@ -144,8 +144,8 @@ class Profile(LoginRequiredMixin, View):
                    'last_name': user.last_name,
                    'email': user.email,
                    'donations_all': users_donations.count,
-                   'all_pending': users_donations.filter(is_taken=False),
-                   'all_taken': users_donations.filter(is_taken=True)
+                   'all_pending': users_donations.filter(is_taken=False).order_by('pick_up_date'),
+                   'all_taken': users_donations.filter(is_taken=True).order_by('-pick_up_date')
                    }
         return render(request, 'profile.html', context)
 
