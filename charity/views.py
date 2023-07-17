@@ -45,7 +45,7 @@ class AddDonation(LoginRequiredMixin, View):
         return render(request, 'form.html', context)
 
     def post(self, request):
-        categories = request.POST.get('categories')
+        categories = request.POST.getlist('categories')
         quantity = request.POST.get('bags')
         institution = request.POST.get('organization')
         address = request.POST.get('address')
@@ -56,12 +56,15 @@ class AddDonation(LoginRequiredMixin, View):
         pick_up_time = request.POST.get('time')
         pick_up_comment = request.POST.get('more_info')
         user = request.user.pk
-        Donation.objects.create(quantity=quantity,
-                                institution_id=institution, address=address,
-                                phone_number=phone_number, city=city,
-                                zip_code=zip_code, pick_up_date=pick_up_date,
-                                pick_up_time=pick_up_time, pick_up_comment=pick_up_comment,
-                                user_id=user)
+
+        donation = Donation.objects.create(
+            quantity=quantity, institution_id=institution, address=address, phone_number=phone_number,
+            city=city, zip_code=zip_code, pick_up_date=pick_up_date, pick_up_time=pick_up_time,
+            pick_up_comment=pick_up_comment, user_id=user
+        )
+        donation.categories.set(categories)
+        donation.save()
+
         return redirect('donation_confirmation')
 
 

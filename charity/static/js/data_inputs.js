@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     // Step 1
-    const categories = document.getElementsByName('categories');
+    let categories = document.getElementsByName('categories');
     let categories_values = []
     categories.forEach((checkbox) => {
         checkbox.addEventListener('change', (event) => {
@@ -12,10 +12,10 @@ document.addEventListener("DOMContentLoaded", function () {
     })
 
     // Step 2
-    const bags = document.querySelector("input[name='bags']");
+    let bags = document.querySelector("input[name='bags']");
 
     // Step 3
-    const orgs = document.querySelectorAll("input[name='organization']");
+    let orgs = document.querySelectorAll("input[name='organization']");
 
     function showOrg() {
         if (this.checked) {
@@ -23,63 +23,63 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    for (const org of orgs) {
+    for (let org of orgs) {
         org.addEventListener('change', showOrg);
     }
 
     // Step 4
     // Mailing data
-    const address = document.querySelector("input[name='address']");
-    const city = document.querySelector("input[name='city']");
-    const postcode = document.querySelector("input[name='postcode']");
-    const phone = document.querySelector("input[name='phone']");
-    const data = document.querySelector("input[name='data']");
-    const time = document.querySelector("input[name='time']");
-    const more_info = document.querySelector("textarea[name='more_info']");
+    let address = document.querySelector("input[name='address']");
+    let city = document.querySelector("input[name='city']");
+    let postcode = document.querySelector("input[name='postcode']");
+    let phone = document.querySelector("input[name='phone']");
+    let data = document.querySelector("input[name='data']");
+    let time = document.querySelector("input[name='time']");
+    let more_info = document.querySelector("textarea[name='more_info']");
 
     // Step 5
     // Summary - main info
-    const summary_bags_categories = document.getElementById("summary_bags_categories");
+    let summary_bags_categories = document.getElementById("summary_bags_categories");
     bags.addEventListener("change", () => {
         return summary_bags_categories.innerText = bags.value + " sztuk worków zawierających " + categories_values.join(', ');
     });
 
-    const summary_organisation = document.getElementById("summary_organisation");
+    let summary_organisation = document.getElementById("summary_organisation");
 
 
     // Summary - left side
-    const address_output = document.getElementById("address");
+    let address_output = document.getElementById("address");
     address.addEventListener("change", () => {
         return address_output.innerText = `${address.value}`;
     });
 
-    const city_output = document.getElementById("city");
+    let city_output = document.getElementById("city");
     city.addEventListener("change", () => {
         return city_output.innerText = city.value;
     });
 
-    const postcode_output = document.getElementById("zipcode");
+    let postcode_output = document.getElementById("zipcode");
     postcode.addEventListener("change", () => {
         return postcode_output.innerText = postcode.value;
     });
 
-    const phone_output = document.getElementById("phonenumber");
+    let phone_output = document.getElementById("phonenumber");
     phone.addEventListener("change", () => {
         return phone_output.innerText = phone.value;
     });
 
     // Summary - right side
-    const data_output = document.getElementById("pickup_date");
+    let data_output = document.getElementById("pickup_date");
     data.addEventListener("change", () => {
         return data_output.innerText = data.value;
     });
 
-    const time_output = document.getElementById("pickup_time");
+    let time_output = document.getElementById("pickup_time");
     time.addEventListener("change", () => {
         return time_output.innerText = time.value;
     });
 
-    const more_info_output = document.getElementById("pickup_info");
+    let more_info_output = document.getElementById("pickup_info");
     more_info.addEventListener("change", () => {
         return more_info_output.innerText = more_info.value;
     });
