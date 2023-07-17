@@ -1,3 +1,4 @@
+from datetime import date
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 from django.shortcuts import render, redirect
@@ -145,13 +146,14 @@ class Profile(LoginRequiredMixin, View):
                    'email': user.email,
                    'donations_all': users_donations.count,
                    'all_pending': users_donations.filter(is_taken=False).order_by('pick_up_date'),
-                   'all_taken': users_donations.filter(is_taken=True).order_by('-pick_up_date')
+                   'all_taken': users_donations.filter(is_taken=True).order_by('picked_up_on')
                    }
         return render(request, 'profile.html', context)
 
     def post(self, request, pk):
         taken_donation = Donation.objects.get(pk=request.POST.get('submit'))
         taken_donation.is_taken = True
+        taken_donation.picked_up_on = date.today()
         taken_donation.save()
         return redirect('profile', pk=request.user.pk)
 

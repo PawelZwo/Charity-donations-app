@@ -26,11 +26,11 @@
                 <ul id="pending_donations" style="list-style-type: none; margin-top: -15px;">
                     {% for pending in all_pending %}
 
-                        <li style="margin-bottom: 10px;">
+                        <li style="margin-bottom: 15px;">
                             {{ pending.quantity }} worków dla {{ pending.institution }} zawierających {{ pending.categories.all|join:", " }}
-                            (do zabrania dnia {{ pending.pick_up_date }} o godz. {{ pending.pick_up_time }})
+                            (planowana data odebrania: {{ pending.pick_up_date }} {{ pending.pick_up_time }})
                             <button type="submit" name="submit" value="{{ pending.pk }}"
-                                    style="margin-left: 10px; display: inline;">
+                                    style="margin-left: 5px; display: inline;">
                                 Zabrane
                             </button>
                         </li>
@@ -47,7 +47,7 @@
             <ul id="taken_donations">
                 {% for taken in all_taken %}
                     <li style="margin-bottom: 5px;">
-                        {{ taken.quantity }} worków dla {{ taken.institution }} zawierających {{ taken.categories.all|join:", " }}
+                        {{ taken.quantity }} worków dla {{ taken.institution }} zawierających {{ taken.categories.all|join:", " }} (zabrane {{ taken.picked_up_on }})
                     </li>
                 {% empty %}
                     Sprawdź, czy któraś z Twoich donacji nie została już odebrana!
