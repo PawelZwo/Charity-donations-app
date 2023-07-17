@@ -2,21 +2,36 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import *
-from django.contrib.auth import login, logout, update_session_auth_hash
+from django.contrib.auth import login, logout
 from .forms import *
 from django.contrib import messages
+from random import sample
 
 
 class LandingPage(View):
     def get(self, request):
+        organisations = Institution.objects.filter(type='organizacja pozarządowa')
+        foundations = Institution.objects.filter(type='fundacja')
+        local_funding = Institution.objects.filter(type='zbiórka lokalna')
         context = {
             'bags': Donation.objects.all().count(),
             'places': Institution.objects.all().count(),
-            'organisations': Institution.objects.filter(type='organizacja pozarządowa'),
-            'fundations': Institution.objects.filter(type='fundacja'),
-            'locals': Institution.objects.filter(type='zbiórka lokalna')
         }
-        return render(request, 'index.html', context)
+
+        if organisations.count() >= 5 and foundations.count() >= 5 and local_funding.count() >= 5:
+            context_sampled = {
+                                  'organisations': sample(list(organisations), 5),
+                                  'fundations': sample(list(foundations), 5),
+                                  'locals': sample(list(local_funding), 5)
+                              } | context
+            return render(request, 'index.html', context_sampled)
+        else:
+            context_not_sampled = {
+                                      'organisations': organisations,
+                                      'fundations': foundations,
+                                      'locals': local_funding
+                                  } | context
+            return render(request, 'index.html', context_not_sampled)
 
 
 class AddDonation(LoginRequiredMixin, View):
