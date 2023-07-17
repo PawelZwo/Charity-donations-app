@@ -1,12 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
 from django.views import View
 from .models import *
 from django.contrib.auth import login, logout, update_session_auth_hash
 from .forms import *
 from django.contrib import messages
-from django.contrib.auth.forms import PasswordChangeForm
 
 
 class LandingPage(View):
@@ -147,7 +145,7 @@ class PasswordConfirmation(LoginRequiredMixin, View):
     def post(self, request):
         password = request.POST.get('password')
         password_confirmation = request.POST.get('password2')
-        if request.user.check_password(password_confirmation):
+        if request.user.check_password(password_confirmation) and password_confirmation == password:
             return redirect('password_change')
         else:
             messages.error(request, 'Hasła są różne od siebie lub nie są zgodne z Twoim obecnym hasłem.')
@@ -157,15 +155,18 @@ class PasswordConfirmation(LoginRequiredMixin, View):
 class ChangePassword(LoginRequiredMixin, View):
 
     def get(self, request):
-        form = PasswordChangeForm(request.user)
-        return render(request, 'password_change.html', {'form': form})
+        return render(request, 'password_change.html')
 
     def post(self, request):
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)
-            messages.success(request, 'Pomyślnie zmieniono hasło!')
-            return redirect('profile')
+        old_password = request.POST.get('old_password')
+        new_password = request.POST.get('password')
+        new_password_confirmation = request.POST.get('password2')
+        if request.user.check_password(old_password) and new_password_confirmation == new_password:
+            request.user.set_password(new_password)
+            request.user.save()
+            messages.success(request, 'Hasło poprawnie zmienionne.')
+            login(request, request.user)
+            return redirect('profile', pk=request.user.pk)
         else:
-            messages.error(request, 'Wprowadź poprawnie nowe hasło.')
+            messages.error(request, 'Obecne hasło jest nieprawidłowe i/lub nie wprowadziłxś takich sam haseł.')
+            return render(request, 'password_change.html')

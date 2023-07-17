@@ -20,9 +20,8 @@
 
         <div>
 
-            {% if all_pending != 0 %}
-                <h3>Donacje do odebrania:</h3>
-                <form method="post">
+            <h3>Donacje do odebrania:</h3>
+            <form method="post">
                 {% csrf_token %}
                 <ul id="pending_donations" style="list-style-type: none; margin-top: -15px;">
                     {% for pending in all_pending %}
@@ -30,28 +29,30 @@
                         <li style="margin-bottom: 10px;">
                             {{ pending.quantity }} worków dla {{ pending.institution }}
                             (do zabrania dnia {{ pending.pick_up_date }} o godz. {{ pending.pick_up_time }})
-                            <button type="submit" name="submit" value="{{ pending.pk }}" style="margin-left: 10px; display: inline;">
+                            <button type="submit" name="submit" value="{{ pending.pk }}"
+                                    style="margin-left: 10px; display: inline;">
                                 Zabrane
                             </button>
                         </li>
 
+                    {% empty %}
+                        Wszystkie donacje zabrane!
                     {% endfor %}
                 </ul>
-                </form>
-            {% endif %}
+            </form>
 
             <br>
 
-            {% if all_taken.count != 0 %}
-                <h3>Donacje odebrane:</h3>
-                <ul id="taken_donations" style="list-style-type: none;">
-                    {% for taken in all_taken %}
-                        <li style="margin-bottom: 10px;">
-                            {{ taken.quantity }} worków dla {{ taken.institution }}
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+            <h3>Donacje odebrane:</h3>
+            <ul id="taken_donations">
+                {% for taken in all_taken %}
+                    <li style="margin-bottom: 5px;">
+                        {{ taken.quantity }} worków dla {{ taken.institution }}
+                    </li>
+                {% empty %}
+                    Sprawdź, czy któraś z Twoich donacji nie została już odebrana!
+                {% endfor %}
+            </ul>
 
         </div>
     </section>
