@@ -40,7 +40,7 @@ The app was created using:
 ## Requirements
 
 ```
-* Django==4.2.3
+* Django 4.2.3
 * psycopg2-binary 2.9.6
 ```
 
@@ -101,4 +101,4 @@ The app was created using:
 ## Additional info
 
 This app uses Polish time (UTC+01:00) and language. 
-Original page layout and CSS were delivered by [Coder's Lab](https://github.com/CodersLab).
+Original page layout and CSS were provided by [Coder's Lab](https://github.com/CodersLab).
