@@ -100,5 +100,5 @@ The app was created using:
 
 ## Additional info
 
-This app uses Polish time (UTC+01:00) and language.
-Original page layoput and CSS were delivered by [Coder's Lab](https://github.com/CodersLab).
+This app uses Polish time (UTC+01:00) and language. 
+Original page layout and CSS were delivered by [Coder's Lab](https://github.com/CodersLab).
